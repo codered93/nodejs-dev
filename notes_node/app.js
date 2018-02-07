@@ -2,27 +2,36 @@ console.log('Starting app.js');
 
 const fs=require('fs');
 const os=require('os');
+const yargs=require('yargs');
 const notes=require('./notes.js');
 var user=os.userInfo();
 const _=require('lodash');
 
-var command=process.argv[2];
+const argv=yargs.argv;
+//var command=process.argv[2];
+//Instead of the process.argv, we can use yargs to grab the command.
+var command =argv._[0];
 console.log('Command: ',command);
-console.log(process.argv);
+console.log('Process ',process.argv);
+console.log('Yargs ',argv);
 if(command==='add'){
-    console.log('Adding new note');
+    //console.log('Adding new note');
+    notes.addNote(argv.title,argv.body);
 }
 else if(command==='list')
     {
-        console.log('Listing all notes');
+        //console.log('Listing all notes');
+        notes.getAll();
     }
 else if(command==='read')
     {
-        console.log('fetching note');
+        notes.getNote(argv.title);
+        //console.log('fetching note');
     }
 else if(command ==='remove')
     {
-        console.log('removing note');
+        notes.removeNote(argv.title);
+        //console.log('removing note');
     }
 else
     {
